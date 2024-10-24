@@ -1,0 +1,36 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeclock", "Timeclock.csproj", "{45CAEE06-C602-474E-93C7-B72A9B327B99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeclockControls", "..\TimeclockControls\TimeclockControls.csproj", "{594DA549-A5F2-4584-AD83-CAA62725A6D9}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Timeclock Setup", "..\Timeclock Setup\Timeclock Setup.vdproj", "{0CC4C5A0-15E3-4962-9FA0-125700A2DDF6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45CAEE06-C602-474E-93C7-B72A9B327B99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45CAEE06-C602-474E-93C7-B72A9B327B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45CAEE06-C602-474E-93C7-B72A9B327B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45CAEE06-C602-474E-93C7-B72A9B327B99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{594DA549-A5F2-4584-AD83-CAA62725A6D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{594DA549-A5F2-4584-AD83-CAA62725A6D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{594DA549-A5F2-4584-AD83-CAA62725A6D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{594DA549-A5F2-4584-AD83-CAA62725A6D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CC4C5A0-15E3-4962-9FA0-125700A2DDF6}.Debug|Any CPU.ActiveCfg = Debug
+		{0CC4C5A0-15E3-4962-9FA0-125700A2DDF6}.Debug|Any CPU.Build.0 = Debug
+		{0CC4C5A0-15E3-4962-9FA0-125700A2DDF6}.Release|Any CPU.ActiveCfg = Release
+		{0CC4C5A0-15E3-4962-9FA0-125700A2DDF6}.Release|Any CPU.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED177F6A-AB55-4885-BAF4-C7453F91A4C8}
+	EndGlobalSection
+EndGlobal

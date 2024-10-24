@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Dangerwolf.Timeclock.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Clock24Hour" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="TimeStoreFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TimeStore-{0:yyyyMMdd}.xml</Value>
+    </Setting>
+    <Setting Name="TimeStoreDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">%HOMEDRIVE%%HOMEPATH%\My Documents</Value>
+    </Setting>
+    <Setting Name="AlternateTimingMethod" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,11 @@
+D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\obj\Release\Timeclock.csproj.AssemblyReference.cache
+D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\obj\Release\Dangerwolf.Timeclock.Timeclock.resources
+D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\obj\Release\Dangerwolf.Timeclock.ViewTimeEntries.resources
+D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\obj\Release\Timeclock.csproj.GenerateResource.cache
+D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\bin\Release\Timeclock.exe.config
+D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\bin\Release\Timeclock.exe
+D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\bin\Release\TimeclockControls.dll
+D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\bin\Release\TimeclockControls.pdb
+D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\obj\Release\Timeclock.csproj.CoreCompileInputs.cache
+D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\obj\Release\Timeclock.csproj.CopyComplete
+D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\obj\Release\Timeclock.exe
