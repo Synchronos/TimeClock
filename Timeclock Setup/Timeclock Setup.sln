@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Timeclock Setup", "Timeclock Setup.vdproj", "{FAC138A4-FD38-4DC0-8D5D-AF7ACF44514E}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAC138A4-FD38-4DC0-8D5D-AF7ACF44514E}.Debug|Default.ActiveCfg = Debug
+		{FAC138A4-FD38-4DC0-8D5D-AF7ACF44514E}.Debug|Default.Build.0 = Debug
+		{FAC138A4-FD38-4DC0-8D5D-AF7ACF44514E}.Release|Default.ActiveCfg = Release
+		{FAC138A4-FD38-4DC0-8D5D-AF7ACF44514E}.Release|Default.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

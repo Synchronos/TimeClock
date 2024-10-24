@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="TimeclockControls.clockDisplayControl">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <FileName>clockDisplayControl.cs</FileName>
+      <HashCode>AAIAGIAAQGAAAEEgAAKCAAQGAQAAQAAgAgAAAQEAAgA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeclockControls.clockTimerControl">
+    <Position X="3.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>clockTimerControl.cs</FileName>
+      <HashCode>gQAAgAQAACAABARAEI2BQCBGIADAAEAKACBkAAIRIAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeclockControls.displayGraphics">
+    <Position X="8.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>displayGraphics.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAwAAEAAAAAAAAACCAAAAAAQQAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeclockControls.elapsedTimeDisplayControl">
+    <Position X="6" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>elapsedTimeDisplayControl.cs</FileName>
+      <HashCode>AAAECAAAACAAAAAAAADBAQADRgAAAAAAAUAAAAQAQQA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+</ClassDiagram>
