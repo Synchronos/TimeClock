@@ -9,3 +9,4 @@ D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\bin\Rele
 D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\obj\Release\Timeclock.csproj.CoreCompileInputs.cache
 D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\obj\Release\Timeclock.csproj.CopyComplete
 D:\Old External HDD\Visual Studio 2008\Visual Studio Projects\Timeclock\obj\Release\Timeclock.exe
+C:\Users\stara\source\repos\TimeClock\Timeclock\obj\Release\Timeclock.exe
