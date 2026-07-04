@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace TimeclockControls
@@ -11,6 +12,7 @@ namespace TimeclockControls
         /// Gets or sets a value indicating whether [use 24 hour clock].
         /// </summary>
         /// <value><c>true</c> if [use 24 hour clock]; otherwise, <c>false</c>.</value>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public bool Use24HourClock
         {
             get
