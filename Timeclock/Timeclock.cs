@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using System.IO;
+using Dangerwolf.Timeclock.Core;
 
 namespace Dangerwolf.Timeclock
 {
@@ -15,7 +16,7 @@ namespace Dangerwolf.Timeclock
         private bool useAlternateTimingMethod = Dangerwolf.Timeclock.Properties.Settings.Default.AlternateTimingMethod;
 
         // Date & Time Handling
-        private TimeSpan spanPrevious = TimeSpan.Zero;
+        private readonly TaskTimeTracker _taskTimeTracker = new();
 
         private DataRowView? drAssociatedTask;
 
@@ -65,7 +66,7 @@ namespace Dangerwolf.Timeclock
         void timeclockTimerControl_TimerStarted(object sender, EventArgs e)
         {
             if (drAssociatedTask != null)
-                this.spanPrevious = (TimeSpan)this.drAssociatedTask["TotalTime"];
+                _taskTimeTracker.OnTimerStarted((TimeSpan)this.drAssociatedTask["TotalTime"]);
         }
 
         /// <summary>
@@ -78,7 +79,7 @@ namespace Dangerwolf.Timeclock
             // IsRunning is set to false in stopTimer() before this event fires, so do not check it here.
             if (drAssociatedTask != null)
             {
-                this.drAssociatedTask["TotalTime"] = this.spanPrevious + timeclockTimerControl.GetElapsedTime();
+                this.drAssociatedTask["TotalTime"] = _taskTimeTracker.OnTimerStopped(timeclockTimerControl.GetElapsedTime());
                 this.taskDataGridView.Refresh();
             }
         }
@@ -92,7 +93,7 @@ namespace Dangerwolf.Timeclock
         {
             if (timeclockTimerControl.IsRunning && !timeclockTimerControl.IsPaused && drAssociatedTask != null)
             {
-                this.drAssociatedTask["TotalTime"] = this.spanPrevious + timeclockTimerControl.GetElapsedTime();
+                this.drAssociatedTask["TotalTime"] = _taskTimeTracker.GetLiveTotal(timeclockTimerControl.GetElapsedTime());
                 this.taskDataGridView.InvalidateRow(findGridRow(this.drAssociatedTask));
             }
         }
@@ -254,7 +255,7 @@ namespace Dangerwolf.Timeclock
                     if (!this.taskDataGridView.SelectedRows[0].IsNewRow)
                     {
                         this.drAssociatedTask = this.taskDataGridView.SelectedRows[0].DataBoundItem as DataRowView;
-                        this.spanPrevious = (TimeSpan)this.drAssociatedTask["TotalTime"];
+                        _taskTimeTracker.OnTimerStarted((TimeSpan)this.drAssociatedTask["TotalTime"]);
                     }
                     else
                     {
@@ -289,16 +290,16 @@ namespace Dangerwolf.Timeclock
                         if (MessageBox.Show("Restore the original time?", "Restore Original Time", MessageBoxButtons.YesNo)
                             == DialogResult.Yes)
                         {
-                            this.drAssociatedTask["TotalTime"] = this.spanPrevious;
+                            this.drAssociatedTask["TotalTime"] = _taskTimeTracker.PreviousTotal;
                         }
 
-                        this.spanPrevious = TimeSpan.Zero;
+                        _taskTimeTracker.Reset();
                         this.drAssociatedTask = null;
                     }
                 }
                 else
                 {
-                    this.spanPrevious = TimeSpan.Zero;
+                    _taskTimeTracker.Reset();
                     this.drAssociatedTask = null;
                 }
             }

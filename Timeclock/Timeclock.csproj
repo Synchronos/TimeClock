@@ -10,9 +10,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="System.DirectoryServices" Version="10.0.0" />
-  </ItemGroup>
-  <ItemGroup>
     <BaseApplicationManifest Include="Properties\app.manifest" />
     <None Update="TaskDataSet.xsc">
       <DependentUpon>TaskDataSet.xsd</DependentUpon>

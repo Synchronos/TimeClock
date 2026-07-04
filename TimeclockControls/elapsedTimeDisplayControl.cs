@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using TimeclockControls.Core;
 
 namespace TimeclockControls
 {
@@ -34,38 +35,28 @@ namespace TimeclockControls
         /// </summary>
         public void updateElapsedTime(TimeSpan elapsedTime)
         {
-            // Update the elapsed time display if appropriate.
-            int secondsOnes = 0;
-            int secondsTens = Math.DivRem(elapsedTime.Seconds, 10, out secondsOnes);
+            var d = TimeDisplayCalculator.GetDigits(elapsedTime);
 
             // Update only the necessary digits in the elapsed time display.
-            this.picElapsedSecondsOnes.Image = displayGraphics.numericDigitBitmaps[secondsOnes];
-            if (secondsOnes == 0)
+            this.picElapsedSecondsOnes.Image = displayGraphics.numericDigitBitmaps[d.SecondsOnes];
+            if (d.SecondsOnes == 0)
             {
-                this.picElapsedSecondsTens.Image = displayGraphics.numericDigitBitmaps[secondsTens];
+                this.picElapsedSecondsTens.Image = displayGraphics.numericDigitBitmaps[d.SecondsTens];
                 if (elapsedTime.Seconds == 0)
                 {
-                    int minutesOnes = 0;
-                    int minutesTens = Math.DivRem(elapsedTime.Minutes, 10, out minutesOnes);
-
-                    this.picElapsedMinutesOnes.Image = displayGraphics.numericDigitBitmaps[minutesOnes];
-                    if (minutesOnes == 0)
+                    this.picElapsedMinutesOnes.Image = displayGraphics.numericDigitBitmaps[d.MinutesOnes];
+                    if (d.MinutesOnes == 0)
                     {
-                        this.picElapsedMinutesTens.Image = displayGraphics.numericDigitBitmaps[minutesTens];
+                        this.picElapsedMinutesTens.Image = displayGraphics.numericDigitBitmaps[d.MinutesTens];
                         if (elapsedTime.Minutes == 0)
                         {
-                            int hoursOnes = 0;
-                            int hoursTens = 0;
-                            int hoursHundreds = Math.DivRem((int)elapsedTime.TotalHours, 100, out hoursTens);
-                            hoursTens = Math.DivRem(hoursTens, 10, out hoursOnes);
-
-                            this.picElapsedHoursOnes.Image = displayGraphics.numericDigitBitmaps[hoursOnes];
-                            if (hoursOnes == 0)
+                            this.picElapsedHoursOnes.Image = displayGraphics.numericDigitBitmaps[d.HoursOnes];
+                            if (d.HoursOnes == 0)
                             {
-                                this.picElapsedHoursTens.Image = displayGraphics.numericDigitBitmaps[hoursTens];
-                                if (hoursTens == 0)
+                                this.picElapsedHoursTens.Image = displayGraphics.numericDigitBitmaps[d.HoursTens];
+                                if (d.HoursTens == 0)
                                 {
-                                    this.picElapsedHoursHundreds.Image = displayGraphics.numericDigitBitmaps[hoursHundreds];
+                                    this.picElapsedHoursHundreds.Image = displayGraphics.numericDigitBitmaps[d.HoursHundreds];
                                 }
                             }
                         }
@@ -79,26 +70,15 @@ namespace TimeclockControls
         /// </summary>
         public void updateElapsedTimeAllDigits(TimeSpan elapsedTime)
         {
-            int secondsOnes = 0;
-            int secondsTens = Math.DivRem(elapsedTime.Seconds, 10, out secondsOnes);
+            var d = TimeDisplayCalculator.GetDigits(elapsedTime);
 
-            this.picElapsedSecondsOnes.Image = displayGraphics.numericDigitBitmaps[secondsOnes];
-            this.picElapsedSecondsTens.Image = displayGraphics.numericDigitBitmaps[secondsTens];
-
-            int minutesOnes = 0;
-            int minutesTens = Math.DivRem(elapsedTime.Minutes, 10, out minutesOnes);
-
-            this.picElapsedMinutesOnes.Image = displayGraphics.numericDigitBitmaps[minutesOnes];
-            this.picElapsedMinutesTens.Image = displayGraphics.numericDigitBitmaps[minutesTens];
-
-            int hoursOnes = 0;
-            int hoursTens = 0;
-            int hoursHundreds = Math.DivRem((int)elapsedTime.TotalHours, 100, out hoursTens);
-            hoursTens = Math.DivRem(hoursTens, 10, out hoursOnes);
-
-            this.picElapsedHoursOnes.Image = displayGraphics.numericDigitBitmaps[hoursOnes];
-            this.picElapsedHoursTens.Image = displayGraphics.numericDigitBitmaps[hoursTens];
-            this.picElapsedHoursHundreds.Image = displayGraphics.numericDigitBitmaps[hoursHundreds];
+            this.picElapsedSecondsOnes.Image = displayGraphics.numericDigitBitmaps[d.SecondsOnes];
+            this.picElapsedSecondsTens.Image = displayGraphics.numericDigitBitmaps[d.SecondsTens];
+            this.picElapsedMinutesOnes.Image = displayGraphics.numericDigitBitmaps[d.MinutesOnes];
+            this.picElapsedMinutesTens.Image = displayGraphics.numericDigitBitmaps[d.MinutesTens];
+            this.picElapsedHoursOnes.Image = displayGraphics.numericDigitBitmaps[d.HoursOnes];
+            this.picElapsedHoursTens.Image = displayGraphics.numericDigitBitmaps[d.HoursTens];
+            this.picElapsedHoursHundreds.Image = displayGraphics.numericDigitBitmaps[d.HoursHundreds];
 
             this.picElapsedSecondsSeperator.Image = displayGraphics.colonBitmap;
             this.picElapsedMinutesSeperator.Image = displayGraphics.colonBitmap;

@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
-using System.Diagnostics;
 using System.Timers;
+using TimeclockControls.Abstractions;
 
 namespace TimeclockControls
 {
@@ -14,7 +14,8 @@ namespace TimeclockControls
 
         // Date & Time Handling
         private DateTime _startDateTime;
-        private Stopwatch _stopwatch = new Stopwatch();
+        private readonly IStopwatchAdapter _stopwatch;
+        private readonly ITimeProvider _timeProvider;
         private readonly object _lockReference = new object();
         private TimeSpan _elapsedTimeSpan = TimeSpan.Zero;
         /// <summary>
@@ -39,10 +40,17 @@ namespace TimeclockControls
             }
         }
 
-        public clockTimerControl()
-        {
-            InitializeComponent();
+        public clockTimerControl() : this(new StopwatchAdapter(), new SystemTimeProvider()) { }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="clockTimerControl"/> with injectable dependencies.
+        /// Intended for use in unit tests via the <c>TimeclockControls.Abstractions</c> fakes.
+        /// </summary>
+        public clockTimerControl(IStopwatchAdapter stopwatch, ITimeProvider timeProvider)
+        {
+            _stopwatch = stopwatch;
+            _timeProvider = timeProvider;
+            InitializeComponent();
         }
 
         #region "Timer Button Event Handlers"
@@ -144,7 +152,7 @@ namespace TimeclockControls
             this._stopwatch.Reset();
             this._stopwatch.Start();
             this.ElapsedTimeSpan = this._stopwatch.Elapsed;
-            this._startDateTime = DateTime.Now;
+            this._startDateTime = _timeProvider.Now;
             this.startPauseOrResumeButton.Text = "Pause";
             this.splitUnsplitOrClearButton.Text = "Split";
             this._isPaused = false;
@@ -324,6 +332,18 @@ namespace TimeclockControls
                 return _isPaused;
             }
         }
+        #endregion
+
+        #region "Internal test helpers"
+        // These methods expose private timer actions for integration testing.
+        // They are internal and visible to Timeclock.Tests via InternalsVisibleTo.
+        internal void TestStart()   => startTimer();
+        internal void TestPause()   => pauseTimer();
+        internal void TestResume()  => resumeTimer();
+        internal void TestStop()    => stopTimer();
+        internal void TestSplit()   => splitTimer();
+        internal void TestUnsplit() => unsplitTimer();
+        internal void TestClear()   => clearTimer();
         #endregion
 
         public event EventHandler<ElapsedEventArgs> Elapsed;
