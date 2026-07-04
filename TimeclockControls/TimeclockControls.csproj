@@ -5,6 +5,7 @@
     <AssemblyOriginatorKeyFile>TimeclockControls.pfx</AssemblyOriginatorKeyFile>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="clockDisplayControl.cs">

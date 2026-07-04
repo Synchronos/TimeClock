@@ -66,4 +66,12 @@
     </StartWorkingDirectory>
     <StartWithIE>false</StartWithIE>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Timeclock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ViewTimeEntries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

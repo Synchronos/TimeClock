@@ -1,0 +1,151 @@
+{
+  "packageGovernance": {
+    "totalDistinctPackages": 0,
+    "totalVersionDriftInstances": 0,
+    "targetFramework": "net10.0",
+    "packages": []
+  },
+  "projects": [
+    {
+      "name": "Timeclock",
+      "path": "Timeclock.csproj",
+      "isSdk": false,
+      "currentFrameworks": [
+        "net40"
+      ],
+      "targetFramework": "net10.0",
+      "dependencies": {
+        "packages": [],
+        "assemblies": [
+          {
+            "name": "System",
+            "version": "4.0.0.0",
+            "isTransitive": false,
+            "definedIn": [
+              {
+                "path": "Timeclock.csproj"
+              }
+            ],
+            "physicalPath": "C:\\Windows\\Microsoft.Net\\assembly\\GAC_MSIL\\System\\v4.0_4.0.0.0__b77a5c561934e089\\System.dll",
+            "compatibility": "valid"
+          },
+          {
+            "name": "System.Data",
+            "version": "4.0.0.0",
+            "isTransitive": false,
+            "definedIn": [
+              {
+                "path": "Timeclock.csproj"
+              }
+            ],
+            "physicalPath": "C:\\Windows\\Microsoft.Net\\assembly\\GAC_64\\System.Data\\v4.0_4.0.0.0__b77a5c561934e089\\System.Data.dll",
+            "compatibility": "valid"
+          },
+          {
+            "name": "System.Data.DataSetExtensions",
+            "version": "4.0.0.0",
+            "isTransitive": false,
+            "definedIn": [
+              {
+                "path": "Timeclock.csproj"
+              }
+            ],
+            "physicalPath": "C:\\Windows\\Microsoft.Net\\assembly\\GAC_MSIL\\System.Data.DataSetExtensions\\v4.0_4.0.0.0__b77a5c561934e089\\System.Data.DataSetExtensions.dll",
+            "compatibility": "valid"
+          },
+          {
+            "name": "System.DirectoryServices",
+            "version": "4.0.0.0",
+            "isTransitive": false,
+            "definedIn": [
+              {
+                "path": "Timeclock.csproj"
+              }
+            ],
+            "physicalPath": "C:\\Windows\\Microsoft.Net\\assembly\\GAC_MSIL\\System.DirectoryServices\\v4.0_4.0.0.0__b03f5f7f11d50a3a\\System.DirectoryServices.dll",
+            "compatibility": "valid"
+          },
+          {
+            "name": "System.Drawing",
+            "version": "4.0.0.0",
+            "isTransitive": false,
+            "definedIn": [
+              {
+                "path": "Timeclock.csproj"
+              }
+            ],
+            "physicalPath": "C:\\Windows\\Microsoft.Net\\assembly\\GAC_MSIL\\System.Drawing\\v4.0_4.0.0.0__b03f5f7f11d50a3a\\System.Drawing.dll",
+            "compatibility": "valid"
+          },
+          {
+            "name": "System.Windows.Forms",
+            "version": "4.0.0.0",
+            "isTransitive": false,
+            "definedIn": [
+              {
+                "path": "Timeclock.csproj"
+              }
+            ],
+            "physicalPath": "C:\\Windows\\Microsoft.Net\\assembly\\GAC_MSIL\\System.Windows.Forms\\v4.0_4.0.0.0__b77a5c561934e089\\System.Windows.Forms.dll",
+            "compatibility": "valid"
+          },
+          {
+            "name": "System.Xml",
+            "version": "4.0.0.0",
+            "isTransitive": false,
+            "definedIn": [
+              {
+                "path": "Timeclock.csproj"
+              }
+            ],
+            "physicalPath": "C:\\Windows\\Microsoft.Net\\assembly\\GAC_MSIL\\System.Xml\\v4.0_4.0.0.0__b77a5c561934e089\\System.Xml.dll",
+            "compatibility": "valid"
+          },
+          {
+            "name": "System.Core",
+            "version": "4.0.0.0",
+            "isTransitive": true,
+            "physicalPath": "C:\\Windows\\Microsoft.Net\\assembly\\GAC_MSIL\\System.Core\\v4.0_4.0.0.0__b77a5c561934e089\\System.Core.dll",
+            "compatibility": "valid"
+          },
+          {
+            "name": "mscorlib",
+            "version": "4.0.0.0",
+            "isTransitive": true,
+            "physicalPath": "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\mscorlib.dll",
+            "compatibility": "valid"
+          }
+        ],
+        "projectReferences": [
+          {
+            "name": "TimeclockControls",
+            "isTransitive": false,
+            "definedIn": [
+              {
+                "path": "Timeclock.csproj"
+              }
+            ],
+            "referencedProjectPath": "Controls\\TimeclockControls.csproj",
+            "compatibility": "valid"
+          }
+        ],
+        "frameworkReferences": []
+      }
+    },
+    {
+      "name": "TimeclockControls",
+      "path": "%USERPROFILE%\\source\\repos\\TimeClock\\TimeclockControls\\TimeclockControls.csproj",
+      "isSdk": false,
+      "currentFrameworks": [
+        "net40"
+      ],
+      "targetFramework": "net10.0",
+      "dependencies": {
+        "packages": [],
+        "assemblies": [],
+        "projectReferences": [],
+        "frameworkReferences": []
+      }
+    }
+  ]
+}
