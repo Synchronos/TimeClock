@@ -109,7 +109,7 @@ namespace TimeclockControls
             // This restarts the paused timer.
             this._stopwatch.Start();
             this.ElapsedTimeSpan = this._stopwatch.Elapsed;
-            this._startDateTime = DateTime.Now;
+            // _startDateTime is intentionally not updated here to preserve the original start time.
             this._isPaused = false;
             this.startPauseOrResumeButton.Text = "Pause";
 
@@ -335,17 +335,19 @@ namespace TimeclockControls
         private void updateTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             DateTime currentDateTime = DateTime.Now;
+
+            // Update ElapsedTimeSpan first so the display and Elapsed event see the current value.
+            if (_isRunning)
+            {
+                this.ElapsedTimeSpan = this._stopwatch.Elapsed;
+            }
+
             timeElapsedTimeDisplayControl.updateElapsedTimeDigitSeperators(currentDateTime, _isPaused, _isSplit);
 
             if (!this._isSplit)
                 timeElapsedTimeDisplayControl.updateElapsedTime(ElapsedTimeSpan);
 
             timeclockDisplayControl.updateClock(currentDateTime);
-
-            if (_isRunning)
-            {
-                this.ElapsedTimeSpan = this._stopwatch.Elapsed;
-            }
 
             if (Elapsed != null)
                 Elapsed(this, e);

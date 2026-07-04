@@ -56,7 +56,7 @@ namespace TimeclockControls
                         {
                             int hoursOnes = 0;
                             int hoursTens = 0;
-                            int hoursHundreds = Math.DivRem(elapsedTime.Hours, 100, out hoursTens);
+                            int hoursHundreds = Math.DivRem((int)elapsedTime.TotalHours, 100, out hoursTens);
                             hoursTens = Math.DivRem(hoursTens, 10, out hoursOnes);
 
                             this.picElapsedHoursOnes.Image = displayGraphics.numericDigitBitmaps[hoursOnes];
@@ -93,7 +93,7 @@ namespace TimeclockControls
 
             int hoursOnes = 0;
             int hoursTens = 0;
-            int hoursHundreds = Math.DivRem(elapsedTime.Hours, 100, out hoursTens);
+            int hoursHundreds = Math.DivRem((int)elapsedTime.TotalHours, 100, out hoursTens);
             hoursTens = Math.DivRem(hoursTens, 10, out hoursOnes);
 
             this.picElapsedHoursOnes.Image = displayGraphics.numericDigitBitmaps[hoursOnes];

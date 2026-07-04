@@ -19,16 +19,16 @@ namespace TimeclockControls
             // Load the image array with the digits stored in the assembly.
             for (int i = 0; i != 10; i++)
             {
-                numericDigitBitmaps[i] = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics." + i + ".gif"));
+                numericDigitBitmaps[i] = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics." + i + ".gif")!);
             }
 
             // Load the special characters.
-            blankDigitBitmap = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics.blank.gif"));
-            colonBitmap = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics.colon.gif"));
-            dashBitmap = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics.dash.gif"));
-            timeAMBitmap = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics.timeAM.gif"));
-            timePMBitmap = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics.timePM.gif"));
-            time24HourBitmap = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics.time24hr.gif"));
+            blankDigitBitmap = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics.blank.gif")!);
+            colonBitmap = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics.colon.gif")!);
+            dashBitmap = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics.dash.gif")!);
+            timeAMBitmap = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics.timeAM.gif")!);
+            timePMBitmap = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics.timePM.gif")!);
+            time24HourBitmap = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("TimeclockControls.Digit_Graphics.time24hr.gif")!);
         }
     }
 }
