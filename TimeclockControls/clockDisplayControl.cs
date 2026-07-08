@@ -68,9 +68,9 @@ namespace TimeclockControls
             int secondOnes = 0;
             int secondTens = Math.DivRem(currentDateTime.Second, 10, out secondOnes);
 
-            this.clockSecondSeperatorPictureBox.Image = displayGraphics.colonBitmap;
-            this.clockSecondTensPictureBox.Image = displayGraphics.numericDigitBitmaps[secondTens];
-            this.clockSecondOnesPictureBox.Image = displayGraphics.numericDigitBitmaps[secondOnes];
+            clockSecondSeperatorPictureBox.Image = displayGraphics.colonBitmap;
+            clockSecondTensPictureBox.Image = displayGraphics.numericDigitBitmaps[secondTens];
+            clockSecondOnesPictureBox.Image = displayGraphics.numericDigitBitmaps[secondOnes];
         }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace TimeclockControls
             int minuteOnes = 0;
             int minuteTens = Math.DivRem(currentDateTime.Minute, 10, out minuteOnes);
 
-            this.clockMinuteSeperatorPictureBox.Image = displayGraphics.colonBitmap;
-            this.clockMinuteTensPictureBox.Image = displayGraphics.numericDigitBitmaps[minuteTens];
-            this.clockMinutesOnesPictureBox.Image = displayGraphics.numericDigitBitmaps[minuteOnes];
+            clockMinuteSeperatorPictureBox.Image = displayGraphics.colonBitmap;
+            clockMinuteTensPictureBox.Image = displayGraphics.numericDigitBitmaps[minuteTens];
+            clockMinutesOnesPictureBox.Image = displayGraphics.numericDigitBitmaps[minuteOnes];
         }
 
         /// <summary>
@@ -99,11 +99,11 @@ namespace TimeclockControls
             int hourTens = Math.DivRem(hour, 10, out hourOnes);
 
             if (use24HourClock || hourTens > 0)
-                this.clockHourTensPictureBox.Image = displayGraphics.numericDigitBitmaps[hourTens];
+                clockHourTensPictureBox.Image = displayGraphics.numericDigitBitmaps[hourTens];
             else
-                this.clockHourTensPictureBox.Image = displayGraphics.blankDigitBitmap;
+                clockHourTensPictureBox.Image = displayGraphics.blankDigitBitmap;
 
-            this.clockHourOnesPictureBox.Image = displayGraphics.numericDigitBitmaps[hourOnes];
+            clockHourOnesPictureBox.Image = displayGraphics.numericDigitBitmaps[hourOnes];
         }
 
         /// <summary>
@@ -116,30 +116,30 @@ namespace TimeclockControls
             int hour = currentDateTime.Hour;
 
             // Initialize the time display.
-            if (this.use24HourClock)
+            if (use24HourClock)
             {
-                this.clockTimeModePictureBox.Image = displayGraphics.time24HourBitmap;
+                clockTimeModePictureBox.Image = displayGraphics.time24HourBitmap;
             }
             else
             {
                 if (hour > 12)
                 {
-                    this.clockTimeModePictureBox.Image = displayGraphics.timePMBitmap;
+                    clockTimeModePictureBox.Image = displayGraphics.timePMBitmap;
                     hour -= 12;
                 }
                 else if (hour == 12)
                 {
-                    this.clockTimeModePictureBox.Image = displayGraphics.timePMBitmap;
+                    clockTimeModePictureBox.Image = displayGraphics.timePMBitmap;
                     hour = 12;
                 }
                 else if (hour == 0)
                 {
-                    this.clockTimeModePictureBox.Image = displayGraphics.timeAMBitmap;
+                    clockTimeModePictureBox.Image = displayGraphics.timeAMBitmap;
                     hour = 12;
                 }
                 else
                 {
-                    this.clockTimeModePictureBox.Image = displayGraphics.timeAMBitmap;
+                    clockTimeModePictureBox.Image = displayGraphics.timeAMBitmap;
                 }
             }
 
@@ -157,9 +157,9 @@ namespace TimeclockControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void use24hourClockToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.use24HourClock = !this.use24HourClock;
-            this.use24hourClockToolStripMenuItem.Checked = this.use24HourClock;
-            this.updateClockAllDigits(DateTime.Now);
+            use24HourClock = !use24HourClock;
+            use24hourClockToolStripMenuItem.Checked = use24HourClock;
+            updateClockAllDigits(DateTime.Now);
         }
 
         #endregion

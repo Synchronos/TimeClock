@@ -28,17 +28,17 @@ namespace Dangerwolf.Timeclock
             InitializeComponent();
 
             // Set up the event handlers.
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Timeclock_FormClosing);
+            FormClosing += new System.Windows.Forms.FormClosingEventHandler(Timeclock_FormClosing);
 
-            this.timeclockTimerControl.Elapsed += new EventHandler<System.Timers.ElapsedEventArgs>(timeclockTimerControl_Elapsed);
-            this.timeclockTimerControl.TimerStarted += new EventHandler<EventArgs>(timeclockTimerControl_TimerStarted);
-            this.timeclockTimerControl.TimerStopped += new EventHandler<EventArgs>(timeclockTimerControl_TimerStopped);
+            timeclockTimerControl.Elapsed += new EventHandler<System.Timers.ElapsedEventArgs>(timeclockTimerControl_Elapsed);
+            timeclockTimerControl.TimerStarted += new EventHandler<EventArgs>(timeclockTimerControl_TimerStarted);
+            timeclockTimerControl.TimerStopped += new EventHandler<EventArgs>(timeclockTimerControl_TimerStopped);
 
-            this.taskDataGridView.CellValidating += new DataGridViewCellValidatingEventHandler(taskDataGridView_CellValidating);
+            taskDataGridView.CellValidating += new DataGridViewCellValidatingEventHandler(taskDataGridView_CellValidating);
             //this.taskDataGridView.RowValidating += new DataGridViewCellCancelEventHandler(taskDataGridView_RowValidating);
-            this.taskDataGridView.CellEndEdit += new DataGridViewCellEventHandler(taskDataGridView_CellEndEdit);
-            this.taskDataSet.Tables["Tasks"].TableNewRow += new DataTableNewRowEventHandler(tasksTable_TableNewRow);
-            this.taskDataSet.Tables["Tasks"].RowDeleted += new DataRowChangeEventHandler(tasksTable_RowDeleted);
+            taskDataGridView.CellEndEdit += new DataGridViewCellEventHandler(taskDataGridView_CellEndEdit);
+            taskDataSet.Tables["Tasks"].TableNewRow += new DataTableNewRowEventHandler(tasksTable_TableNewRow);
+            taskDataSet.Tables["Tasks"].RowDeleted += new DataRowChangeEventHandler(tasksTable_RowDeleted);
 
             // If we have a string formatting expression in the default filename then replace it.
             if (timeclockDataSaveFileDialog.FileName.Contains("{"))
@@ -66,7 +66,7 @@ namespace Dangerwolf.Timeclock
         void timeclockTimerControl_TimerStarted(object sender, EventArgs e)
         {
             if (drAssociatedTask != null)
-                _taskTimeTracker.OnTimerStarted((TimeSpan)this.drAssociatedTask["TotalTime"]);
+                _taskTimeTracker.OnTimerStarted((TimeSpan)drAssociatedTask["TotalTime"]);
         }
 
         /// <summary>
@@ -79,8 +79,8 @@ namespace Dangerwolf.Timeclock
             // IsRunning is set to false in stopTimer() before this event fires, so do not check it here.
             if (drAssociatedTask != null)
             {
-                this.drAssociatedTask["TotalTime"] = _taskTimeTracker.OnTimerStopped(timeclockTimerControl.GetElapsedTime());
-                this.taskDataGridView.Refresh();
+                drAssociatedTask["TotalTime"] = _taskTimeTracker.OnTimerStopped(timeclockTimerControl.GetElapsedTime());
+                taskDataGridView.Refresh();
             }
         }
 
@@ -93,8 +93,8 @@ namespace Dangerwolf.Timeclock
         {
             if (timeclockTimerControl.IsRunning && !timeclockTimerControl.IsPaused && drAssociatedTask != null)
             {
-                this.drAssociatedTask["TotalTime"] = _taskTimeTracker.GetLiveTotal(timeclockTimerControl.GetElapsedTime());
-                this.taskDataGridView.InvalidateRow(findGridRow(this.drAssociatedTask));
+                drAssociatedTask["TotalTime"] = _taskTimeTracker.GetLiveTotal(timeclockTimerControl.GetElapsedTime());
+                taskDataGridView.InvalidateRow(findGridRow(drAssociatedTask));
             }
         }
 
@@ -105,7 +105,7 @@ namespace Dangerwolf.Timeclock
         /// <returns>The index of the matching row in the DataGridView.</returns>
         private int findGridRow(DataRowView matchRow)
         {
-            foreach (DataGridViewRow row in this.taskDataGridView.Rows)
+            foreach (DataGridViewRow row in taskDataGridView.Rows)
             {
                 if (row.DataBoundItem == matchRow)
                     return row.Index;
@@ -124,24 +124,45 @@ namespace Dangerwolf.Timeclock
         /// <param name="e">The <see cref="T:System.Windows.Forms.FormClosingEventArgs"/> instance containing the event data.</param>
         void Timeclock_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
-            this.Validate();
+            if (taskDataGridView.IsCurrentCellInEditMode)
+            {
+                DialogResult discardEditResult = MessageBox.Show(
+                    "You have an incomplete task edit.\n\nDo you want to close anyway?\nSelect Yes to discard this edit and close, or No to return and fix it.",
+                    "Unsaved Task Edit",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (discardEditResult == DialogResult.Yes)
+                {
+                    if (!taskDataGridView.CancelEdit())
+                    {
+                        MessageBox.Show("The task edit could not be canceled. Please fix the error and try again.", "Task Edit Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        e.Cancel = true;
+                        return;
+                    }
+                }
+            }
+
             //this.taskDataSetBindingSource.EndEdit();
 
             // Update default properties and save them.
-            Dangerwolf.Timeclock.Properties.Settings.Default.Clock24Hour = this.use24HourClock;
+            Dangerwolf.Timeclock.Properties.Settings.Default.Clock24Hour = use24HourClock;
             Dangerwolf.Timeclock.Properties.Settings.Default.Save();
 
-            if (this.taskDataSet.HasChanges())
+//TODO: Still failing to close without throwing an exception after form closing when hitting the component Dispose. Figure out how to discard the offending row.
+
+            if (taskDataSet.HasChanges())
             {
                 switch (MessageBox.Show("You have unsaved data. Save the data before quitting?", "Unsaved Data", MessageBoxButtons.YesNoCancel))
                 {
                     case DialogResult.Yes:
-                             if (this.timeclockDataSaveFileDialog.ShowDialog() == DialogResult.OK)
+                             if (timeclockDataSaveFileDialog.ShowDialog() == DialogResult.OK)
                             {
-                                using (FileStream file = (FileStream)this.timeclockDataSaveFileDialog.OpenFile())
+                                using (FileStream file = (FileStream)timeclockDataSaveFileDialog.OpenFile())
                                 {
-                                    this.taskDataSet.AcceptChanges();
-                                    this.taskDataSet.WriteXml(file, XmlWriteMode.IgnoreSchema);
+                                    taskDataSet.AcceptChanges();
+                                    taskDataSet.WriteXml(file, XmlWriteMode.IgnoreSchema);
                                     file.Close();
                                 }
                             }
@@ -204,11 +225,11 @@ namespace Dangerwolf.Timeclock
         /// <param name="e">The <see cref="System.Windows.Forms.DataGridViewCellCancelEventArgs"/> instance containing the event data.</param>
         private void taskDataGridView_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
         {
-            string taskNameValue = this.taskDataGridView.Rows[e.RowIndex].Cells["TaskName"].FormattedValue?.ToString() ?? string.Empty;
+            string taskNameValue = taskDataGridView.Rows[e.RowIndex].Cells["TaskName"].FormattedValue?.ToString() ?? string.Empty;
 
             if (String.IsNullOrEmpty(taskNameValue) || taskNameValue.Trim().Length == 0)
             {
-                this.taskDataGridView.Rows[e.RowIndex].ErrorText = "Task Name must not be empty.";
+                taskDataGridView.Rows[e.RowIndex].ErrorText = "Task Name must not be empty.";
                 e.Cancel = true;
             }
         }
@@ -220,9 +241,9 @@ namespace Dangerwolf.Timeclock
         /// <param name="e">The <see cref="System.Windows.Forms.DataGridViewCellValidatingEventArgs"/> instance containing the event data.</param>
         private void taskDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            if (this.taskDataGridView.Columns[e.ColumnIndex].Name == "nameDataGridViewTextBoxColumn" && (String.IsNullOrEmpty(e.FormattedValue?.ToString()) || e.FormattedValue?.ToString().Trim().Length == 0))
+            if (taskDataGridView.Columns[e.ColumnIndex].Name == "nameDataGridViewTextBoxColumn" && (String.IsNullOrEmpty(e.FormattedValue?.ToString()) || e.FormattedValue?.ToString().Trim().Length == 0))
             {
-                this.taskDataGridView.Rows[e.RowIndex].ErrorText = String.Format("{0} must not be empty.", this.taskDataGridView.Columns[e.ColumnIndex].HeaderText);
+                taskDataGridView.Rows[e.RowIndex].ErrorText = String.Format("{0} must not be empty.", taskDataGridView.Columns[e.ColumnIndex].HeaderText);
                 e.Cancel = true;
             }
         }
@@ -234,7 +255,7 @@ namespace Dangerwolf.Timeclock
         /// <param name="e">The <see cref="System.Windows.Forms.DataGridViewCellEventArgs"/> instance containing the event data.</param>
         void taskDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            this.taskDataGridView.Rows[e.RowIndex].ErrorText = "";
+            taskDataGridView.Rows[e.RowIndex].ErrorText = "";
         }
 
         #endregion
@@ -248,14 +269,14 @@ namespace Dangerwolf.Timeclock
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         private void associateSelectedTaskToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.taskDataGridView.SelectedRows.Count == 1)
+            if (taskDataGridView.SelectedRows.Count == 1)
             {
-                if (this.drAssociatedTask != this.taskDataGridView.SelectedRows[0].DataBoundItem)
+                if (drAssociatedTask != taskDataGridView.SelectedRows[0].DataBoundItem)
                 {
-                    if (!this.taskDataGridView.SelectedRows[0].IsNewRow)
+                    if (!taskDataGridView.SelectedRows[0].IsNewRow)
                     {
-                        this.drAssociatedTask = this.taskDataGridView.SelectedRows[0].DataBoundItem as DataRowView;
-                        _taskTimeTracker.OnTimerStarted((TimeSpan)this.drAssociatedTask["TotalTime"]);
+                        drAssociatedTask = taskDataGridView.SelectedRows[0].DataBoundItem as DataRowView;
+                        _taskTimeTracker.OnTimerStarted((TimeSpan)drAssociatedTask["TotalTime"]);
                     }
                     else
                     {
@@ -263,7 +284,7 @@ namespace Dangerwolf.Timeclock
                     }
                 }
             }
-            else if (this.taskDataGridView.SelectedRows.Count == 0)
+            else if (taskDataGridView.SelectedRows.Count == 0)
             {
                 MessageBox.Show("You must select the entire task row to associate the timer with it.", "Timer association error.", MessageBoxButtons.OK);
             }
@@ -280,7 +301,7 @@ namespace Dangerwolf.Timeclock
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         private void clearAssociationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.drAssociatedTask != null)
+            if (drAssociatedTask != null)
             {
                 if (timeclockTimerControl.IsRunning || timeclockTimerControl.IsPaused)
                 {
@@ -290,21 +311,21 @@ namespace Dangerwolf.Timeclock
                         if (MessageBox.Show("Restore the original time?", "Restore Original Time", MessageBoxButtons.YesNo)
                             == DialogResult.Yes)
                         {
-                            this.drAssociatedTask["TotalTime"] = _taskTimeTracker.PreviousTotal;
+                            drAssociatedTask["TotalTime"] = _taskTimeTracker.PreviousTotal;
                         }
 
                         _taskTimeTracker.Reset();
-                        this.drAssociatedTask = null;
+                        drAssociatedTask = null;
                     }
                 }
                 else
                 {
                     _taskTimeTracker.Reset();
-                    this.drAssociatedTask = null;
+                    drAssociatedTask = null;
                 }
             }
 
-            this.taskDataGridView.Refresh();
+            taskDataGridView.Refresh();
         }
 
         /// <summary>
@@ -314,15 +335,15 @@ namespace Dangerwolf.Timeclock
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         private void saveTimeDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Validate();
+            Validate();
             //this.taskDataSetBindingSource.EndEdit();
 
-            if (this.timeclockDataSaveFileDialog.ShowDialog() == DialogResult.OK)
+            if (timeclockDataSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                using (FileStream file = (FileStream)this.timeclockDataSaveFileDialog.OpenFile())
+                using (FileStream file = (FileStream)timeclockDataSaveFileDialog.OpenFile())
                 {
-                    this.taskDataSet.WriteXml(file, XmlWriteMode.IgnoreSchema);
-                    this.taskDataSet.AcceptChanges();
+                    taskDataSet.WriteXml(file, XmlWriteMode.IgnoreSchema);
+                    taskDataSet.AcceptChanges();
                 }
             }
         }
@@ -334,22 +355,22 @@ namespace Dangerwolf.Timeclock
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         private void loadTimeDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.timeclockDataOpenFileDialog.ShowDialog() == DialogResult.OK)
+            if (timeclockDataOpenFileDialog.ShowDialog() == DialogResult.OK)
             {
-                this.Validate();
+                Validate();
                 //this.taskDataSetBindingSource.EndEdit();
 
-                if (this.taskDataSet.HasChanges())
+                if (taskDataSet.HasChanges())
                 {
                     switch (MessageBox.Show("You have unsaved data. Save the data before loading the new data?", "Unsaved Data", MessageBoxButtons.YesNoCancel))
                     {
                         case DialogResult.Yes:
-                            if (this.timeclockDataSaveFileDialog.ShowDialog() == DialogResult.OK)
+                            if (timeclockDataSaveFileDialog.ShowDialog() == DialogResult.OK)
                             {
-                                using (FileStream file = (FileStream)this.timeclockDataSaveFileDialog.OpenFile())
+                                using (FileStream file = (FileStream)timeclockDataSaveFileDialog.OpenFile())
                                 {
-                                    this.taskDataSet.WriteXml(file, XmlWriteMode.IgnoreSchema);
-                                    this.taskDataSet.AcceptChanges();
+                                    taskDataSet.WriteXml(file, XmlWriteMode.IgnoreSchema);
+                                    taskDataSet.AcceptChanges();
                                 }
                             }
                             break;
@@ -362,12 +383,12 @@ namespace Dangerwolf.Timeclock
                     }
                 }
 
-                using (FileStream file = (FileStream)this.timeclockDataOpenFileDialog.OpenFile())
+                using (FileStream file = (FileStream)timeclockDataOpenFileDialog.OpenFile())
                 {
-                    this.drAssociatedTask = null;
-                    this.taskDataSet.Clear();
-                    this.taskDataSet.ReadXml(file);
-                    this.taskDataSet.AcceptChanges();
+                    drAssociatedTask = null;
+                    taskDataSet.Clear();
+                    taskDataSet.ReadXml(file);
+                    taskDataSet.AcceptChanges();
                     file.Close();
                 }
             }
@@ -380,20 +401,20 @@ namespace Dangerwolf.Timeclock
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         private void clearTimeDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Validate();
+            Validate();
             //this.taskDataSetBindingSource.EndEdit();
 
-            if (this.taskDataSet.HasChanges())
+            if (taskDataSet.HasChanges())
             {
                 switch (MessageBox.Show("You have unsaved data. Save the data before clearing?", "Unsaved Data", MessageBoxButtons.YesNoCancel))
                 {
                     case DialogResult.Yes:
-                        if (this.timeclockDataSaveFileDialog.ShowDialog() == DialogResult.OK)
+                        if (timeclockDataSaveFileDialog.ShowDialog() == DialogResult.OK)
                         {
-                            using (FileStream file = (FileStream)this.timeclockDataSaveFileDialog.OpenFile())
+                            using (FileStream file = (FileStream)timeclockDataSaveFileDialog.OpenFile())
                             {
-                                this.taskDataSet.AcceptChanges();
-                                this.taskDataSet.WriteXml(file, XmlWriteMode.IgnoreSchema);
+                                taskDataSet.AcceptChanges();
+                                taskDataSet.WriteXml(file, XmlWriteMode.IgnoreSchema);
                                 file.Close();
                             }
                         }
@@ -407,9 +428,9 @@ namespace Dangerwolf.Timeclock
                 }
             }
 
-            this.drAssociatedTask = null;
-            this.taskDataSet.Clear();
-            this.taskDataSet.AcceptChanges();
+            drAssociatedTask = null;
+            taskDataSet.Clear();
+            taskDataSet.AcceptChanges();
         }
 
         /// <summary>

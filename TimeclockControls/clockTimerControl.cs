@@ -94,15 +94,15 @@ namespace TimeclockControls
         /// </summary>
         private void startPauseOrResumeTimer()
         {
-            if (!this._isRunning && !this._isSplit)
+            if (!_isRunning && !_isSplit)
             {
                 startTimer();
             }
-            else if (this._isRunning && !this._isPaused)
+            else if (_isRunning && !_isPaused)
             {
                 pauseTimer();
             }
-            else if (this._isRunning && this._isPaused)
+            else if (_isRunning && _isPaused)
             {
                 resumeTimer();
             }
@@ -115,13 +115,13 @@ namespace TimeclockControls
         private void resumeTimer()
         {
             // This restarts the paused timer.
-            this._stopwatch.Start();
-            this.ElapsedTimeSpan = this._stopwatch.Elapsed;
+            _stopwatch.Start();
+            ElapsedTimeSpan = _stopwatch.Elapsed;
             // _startDateTime is intentionally not updated here to preserve the original start time.
-            this._isPaused = false;
-            this.startPauseOrResumeButton.Text = "Pause";
+            _isPaused = false;
+            startPauseOrResumeButton.Text = "Pause";
 
-            timeElapsedTimeDisplayControl.updateElapsedTimeAllDigits(this.ElapsedTimeSpan);
+            timeElapsedTimeDisplayControl.updateElapsedTimeAllDigits(ElapsedTimeSpan);
             timeElapsedTimeDisplayControl.updateElapsedTimeDigitSeperators(_startDateTime, _isPaused, _isSplit);
 
             if (TimerResumed != null)
@@ -135,9 +135,9 @@ namespace TimeclockControls
         private void pauseTimer()
         {
             // This pauses the running timer.
-            this._stopwatch.Stop();
+            _stopwatch.Stop();
             _isPaused = true;
-            this.startPauseOrResumeButton.Text = "Resume";
+            startPauseOrResumeButton.Text = "Resume";
 
             if (TimerPaused != null)
                 TimerPaused(this, EventArgs.Empty);
@@ -149,14 +149,14 @@ namespace TimeclockControls
         /// </summary>
         private void startTimer()
         {
-            this._stopwatch.Reset();
-            this._stopwatch.Start();
-            this.ElapsedTimeSpan = this._stopwatch.Elapsed;
-            this._startDateTime = _timeProvider.Now;
-            this.startPauseOrResumeButton.Text = "Pause";
-            this.splitUnsplitOrClearButton.Text = "Split";
-            this._isPaused = false;
-            this._isRunning = true;
+            _stopwatch.Reset();
+            _stopwatch.Start();
+            ElapsedTimeSpan = _stopwatch.Elapsed;
+            _startDateTime = _timeProvider.Now;
+            startPauseOrResumeButton.Text = "Pause";
+            splitUnsplitOrClearButton.Text = "Split";
+            _isPaused = false;
+            _isRunning = true;
 
             if (TimerStarted != null)
                 TimerStarted(this, EventArgs.Empty);
@@ -168,24 +168,24 @@ namespace TimeclockControls
         /// </summary>
         private void stopTimer()
         {
-            this._isRunning = false;
-            this._isPaused = false;
-            this.ElapsedTimeSpan = this._stopwatch.Elapsed;
+            _isRunning = false;
+            _isPaused = false;
+            ElapsedTimeSpan = _stopwatch.Elapsed;
 
-            this._stopwatch.Stop();
+            _stopwatch.Stop();
 
             if (_isSplit)
             {
-                this.startPauseOrResumeButton.Text = "--";
-                this.startPauseOrResumeButton.Enabled = false;
-                this.splitUnsplitOrClearButton.Text = "Unsplit";
+                startPauseOrResumeButton.Text = "--";
+                startPauseOrResumeButton.Enabled = false;
+                splitUnsplitOrClearButton.Text = "Unsplit";
                 timeElapsedTimeDisplayControl.updateElapsedTimeDigitSeperators(DateTime.Now, _isPaused, _isSplit);
             }
             else
             {
-                this.startPauseOrResumeButton.Text = "Start";
-                this.startPauseOrResumeButton.Enabled = true;
-                this.splitUnsplitOrClearButton.Text = "Clear";
+                startPauseOrResumeButton.Text = "Start";
+                startPauseOrResumeButton.Enabled = true;
+                splitUnsplitOrClearButton.Text = "Clear";
                 timeElapsedTimeDisplayControl.updateElapsedTimeDigitSeperators(DateTime.Now, _isPaused, _isSplit);
             }
 
@@ -204,7 +204,7 @@ namespace TimeclockControls
                 unsplitTimer();
             }
             // If the timer has been stopped and is not split, clear the display and zero the elapsed time stored.
-            else if (!this._isRunning)
+            else if (!_isRunning)
             {
                 clearTimer();
             }
@@ -222,7 +222,7 @@ namespace TimeclockControls
         private void splitTimer()
         {
             _isSplit = true;
-            this.splitUnsplitOrClearButton.Text = "Unsplit";
+            splitUnsplitOrClearButton.Text = "Unsplit";
 
             if (TimerSplit != null)
                 TimerSplit(this, EventArgs.Empty);
@@ -234,8 +234,8 @@ namespace TimeclockControls
         /// </summary>
         private void clearTimer()
         {
-            this.ElapsedTimeSpan = TimeSpan.Zero;
-            this.startPauseOrResumeButton.Text = "Start";
+            ElapsedTimeSpan = TimeSpan.Zero;
+            startPauseOrResumeButton.Text = "Start";
 
             timeElapsedTimeDisplayControl.blankElapsedTime();
 
@@ -250,23 +250,23 @@ namespace TimeclockControls
         private void unsplitTimer()
         {
             // This handles unsplitting the display.
-            this._isSplit = false;
-            this.startPauseOrResumeButton.Enabled = true;
+            _isSplit = false;
+            startPauseOrResumeButton.Enabled = true;
 
             // Change the buttons as appropriate.
-            if (!this._isRunning)
+            if (!_isRunning)
             {
-                this.splitUnsplitOrClearButton.Text = "Clear";
-                this.startPauseOrResumeButton.Text = "Start";
+                splitUnsplitOrClearButton.Text = "Clear";
+                startPauseOrResumeButton.Text = "Start";
             }
             else
             {
-                this.splitUnsplitOrClearButton.Text = "Split";
+                splitUnsplitOrClearButton.Text = "Split";
             }
 
             // Always update the display when coming back from being split because the normal update
             // is optimized to only update certain digits.
-            this.ElapsedTimeSpan = this._stopwatch.Elapsed;
+            ElapsedTimeSpan = _stopwatch.Elapsed;
 
             timeElapsedTimeDisplayControl.updateElapsedTimeAllDigits(ElapsedTimeSpan);
 
@@ -359,12 +359,12 @@ namespace TimeclockControls
             // Update ElapsedTimeSpan first so the display and Elapsed event see the current value.
             if (_isRunning)
             {
-                this.ElapsedTimeSpan = this._stopwatch.Elapsed;
+                ElapsedTimeSpan = _stopwatch.Elapsed;
             }
 
             timeElapsedTimeDisplayControl.updateElapsedTimeDigitSeperators(currentDateTime, _isPaused, _isSplit);
 
-            if (!this._isSplit)
+            if (!_isSplit)
                 timeElapsedTimeDisplayControl.updateElapsedTime(ElapsedTimeSpan);
 
             timeclockDisplayControl.updateClock(currentDateTime);

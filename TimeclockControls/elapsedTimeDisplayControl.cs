@@ -19,15 +19,15 @@ namespace TimeclockControls
         /// </summary>
         public void blankElapsedTime()
         {
-            this.picElapsedHoursHundreds.Image = displayGraphics.blankDigitBitmap;
-            this.picElapsedHoursTens.Image = displayGraphics.blankDigitBitmap;
-            this.picElapsedHoursOnes.Image = displayGraphics.blankDigitBitmap;
-            this.picElapsedMinutesSeperator.Image = displayGraphics.colonBitmap;
-            this.picElapsedMinutesTens.Image = displayGraphics.blankDigitBitmap;
-            this.picElapsedMinutesOnes.Image = displayGraphics.blankDigitBitmap;
-            this.picElapsedSecondsSeperator.Image = displayGraphics.colonBitmap;
-            this.picElapsedSecondsTens.Image = displayGraphics.blankDigitBitmap;
-            this.picElapsedSecondsOnes.Image = displayGraphics.blankDigitBitmap;
+            picElapsedHoursHundreds.Image = displayGraphics.blankDigitBitmap;
+            picElapsedHoursTens.Image = displayGraphics.blankDigitBitmap;
+            picElapsedHoursOnes.Image = displayGraphics.blankDigitBitmap;
+            picElapsedMinutesSeperator.Image = displayGraphics.colonBitmap;
+            picElapsedMinutesTens.Image = displayGraphics.blankDigitBitmap;
+            picElapsedMinutesOnes.Image = displayGraphics.blankDigitBitmap;
+            picElapsedSecondsSeperator.Image = displayGraphics.colonBitmap;
+            picElapsedSecondsTens.Image = displayGraphics.blankDigitBitmap;
+            picElapsedSecondsOnes.Image = displayGraphics.blankDigitBitmap;
         }
 
         /// <summary>
@@ -38,25 +38,25 @@ namespace TimeclockControls
             var d = TimeDisplayCalculator.GetDigits(elapsedTime);
 
             // Update only the necessary digits in the elapsed time display.
-            this.picElapsedSecondsOnes.Image = displayGraphics.numericDigitBitmaps[d.SecondsOnes];
+            picElapsedSecondsOnes.Image = displayGraphics.numericDigitBitmaps[d.SecondsOnes];
             if (d.SecondsOnes == 0)
             {
-                this.picElapsedSecondsTens.Image = displayGraphics.numericDigitBitmaps[d.SecondsTens];
+                picElapsedSecondsTens.Image = displayGraphics.numericDigitBitmaps[d.SecondsTens];
                 if (elapsedTime.Seconds == 0)
                 {
-                    this.picElapsedMinutesOnes.Image = displayGraphics.numericDigitBitmaps[d.MinutesOnes];
+                    picElapsedMinutesOnes.Image = displayGraphics.numericDigitBitmaps[d.MinutesOnes];
                     if (d.MinutesOnes == 0)
                     {
-                        this.picElapsedMinutesTens.Image = displayGraphics.numericDigitBitmaps[d.MinutesTens];
+                        picElapsedMinutesTens.Image = displayGraphics.numericDigitBitmaps[d.MinutesTens];
                         if (elapsedTime.Minutes == 0)
                         {
-                            this.picElapsedHoursOnes.Image = displayGraphics.numericDigitBitmaps[d.HoursOnes];
+                            picElapsedHoursOnes.Image = displayGraphics.numericDigitBitmaps[d.HoursOnes];
                             if (d.HoursOnes == 0)
                             {
-                                this.picElapsedHoursTens.Image = displayGraphics.numericDigitBitmaps[d.HoursTens];
+                                picElapsedHoursTens.Image = displayGraphics.numericDigitBitmaps[d.HoursTens];
                                 if (d.HoursTens == 0)
                                 {
-                                    this.picElapsedHoursHundreds.Image = displayGraphics.numericDigitBitmaps[d.HoursHundreds];
+                                    picElapsedHoursHundreds.Image = displayGraphics.numericDigitBitmaps[d.HoursHundreds];
                                 }
                             }
                         }
@@ -72,16 +72,16 @@ namespace TimeclockControls
         {
             var d = TimeDisplayCalculator.GetDigits(elapsedTime);
 
-            this.picElapsedSecondsOnes.Image = displayGraphics.numericDigitBitmaps[d.SecondsOnes];
-            this.picElapsedSecondsTens.Image = displayGraphics.numericDigitBitmaps[d.SecondsTens];
-            this.picElapsedMinutesOnes.Image = displayGraphics.numericDigitBitmaps[d.MinutesOnes];
-            this.picElapsedMinutesTens.Image = displayGraphics.numericDigitBitmaps[d.MinutesTens];
-            this.picElapsedHoursOnes.Image = displayGraphics.numericDigitBitmaps[d.HoursOnes];
-            this.picElapsedHoursTens.Image = displayGraphics.numericDigitBitmaps[d.HoursTens];
-            this.picElapsedHoursHundreds.Image = displayGraphics.numericDigitBitmaps[d.HoursHundreds];
+            picElapsedSecondsOnes.Image = displayGraphics.numericDigitBitmaps[d.SecondsOnes];
+            picElapsedSecondsTens.Image = displayGraphics.numericDigitBitmaps[d.SecondsTens];
+            picElapsedMinutesOnes.Image = displayGraphics.numericDigitBitmaps[d.MinutesOnes];
+            picElapsedMinutesTens.Image = displayGraphics.numericDigitBitmaps[d.MinutesTens];
+            picElapsedHoursOnes.Image = displayGraphics.numericDigitBitmaps[d.HoursOnes];
+            picElapsedHoursTens.Image = displayGraphics.numericDigitBitmaps[d.HoursTens];
+            picElapsedHoursHundreds.Image = displayGraphics.numericDigitBitmaps[d.HoursHundreds];
 
-            this.picElapsedSecondsSeperator.Image = displayGraphics.colonBitmap;
-            this.picElapsedMinutesSeperator.Image = displayGraphics.colonBitmap;
+            picElapsedSecondsSeperator.Image = displayGraphics.colonBitmap;
+            picElapsedMinutesSeperator.Image = displayGraphics.colonBitmap;
         }
 
         /// <summary>
@@ -94,39 +94,39 @@ namespace TimeclockControls
             {
                 if (currentDateTime.Second % 2 == 0)
                 {
-                    this.picElapsedMinutesSeperator.Image = displayGraphics.colonBitmap;
-                    this.picElapsedSecondsSeperator.Image = displayGraphics.colonBitmap;
+                    picElapsedMinutesSeperator.Image = displayGraphics.colonBitmap;
+                    picElapsedSecondsSeperator.Image = displayGraphics.colonBitmap;
                 }
                 else
                 {
-                    this.picElapsedMinutesSeperator.Image = displayGraphics.dashBitmap;
-                    this.picElapsedSecondsSeperator.Image = displayGraphics.dashBitmap;
+                    picElapsedMinutesSeperator.Image = displayGraphics.dashBitmap;
+                    picElapsedSecondsSeperator.Image = displayGraphics.dashBitmap;
                 }
             }
             else if (isSplit)
             {
                 if (currentDateTime.Second % 2 == 0)
                 {
-                    this.picElapsedMinutesSeperator.Image = displayGraphics.blankDigitBitmap;
-                    this.picElapsedSecondsSeperator.Image = displayGraphics.blankDigitBitmap;
+                    picElapsedMinutesSeperator.Image = displayGraphics.blankDigitBitmap;
+                    picElapsedSecondsSeperator.Image = displayGraphics.blankDigitBitmap;
                 }
                 else
                 {
-                    this.picElapsedMinutesSeperator.Image = displayGraphics.dashBitmap;
-                    this.picElapsedSecondsSeperator.Image = displayGraphics.dashBitmap;
+                    picElapsedMinutesSeperator.Image = displayGraphics.dashBitmap;
+                    picElapsedSecondsSeperator.Image = displayGraphics.dashBitmap;
                 }
             }
             else if (isPaused)
             {
                 if (currentDateTime.Second % 2 == 0)
                 {
-                    this.picElapsedMinutesSeperator.Image = displayGraphics.blankDigitBitmap;
-                    this.picElapsedSecondsSeperator.Image = displayGraphics.blankDigitBitmap;
+                    picElapsedMinutesSeperator.Image = displayGraphics.blankDigitBitmap;
+                    picElapsedSecondsSeperator.Image = displayGraphics.blankDigitBitmap;
                 }
                 else
                 {
-                    this.picElapsedMinutesSeperator.Image = displayGraphics.colonBitmap;
-                    this.picElapsedSecondsSeperator.Image = displayGraphics.colonBitmap;
+                    picElapsedMinutesSeperator.Image = displayGraphics.colonBitmap;
+                    picElapsedSecondsSeperator.Image = displayGraphics.colonBitmap;
                 }
             }
         }
